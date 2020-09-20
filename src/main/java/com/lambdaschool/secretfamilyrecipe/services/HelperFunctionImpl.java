@@ -35,8 +35,8 @@ public class HelperFunctionImpl implements HelperFunctions{
     public boolean inAuthorizedToMakeChanges(String username) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(username.equalsIgnoreCase(authentication.getName()
-                .toLowerCase() || authentication.getAuthorities()
-                .contains(new SimpleGrantedAuthority("ROLE_ADMIN")))) {
+                .toLowerCase()) || authentication.getAuthorities()
+                .contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             return true;
         } else {
             throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");

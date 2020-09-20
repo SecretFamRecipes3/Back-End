@@ -13,40 +13,49 @@ import java.util.List;
 
 @Transactional
 @Service(value = "roleService")
-public class RoleServiceImpl implements RoleService{
+public class RoleServiceImpl implements RoleService {
     @Autowired
     RoleRepository rolerepos;
 
+    @Autowired
+    UserAuditing userAuditing;
+
     @Override
-    public List<Role> findAll(){
+    public List<Role> findAll() {
         List<Role> list = new ArrayList<>();
         rolerepos.findAll().iterator().forEachRemaining(list::add);
         return list;
     }
+
     @Override
-    public Role findRoleById(long id){
+    public Role findRoleById(long id) {
         return rolerepos.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role id " + id + " not found!"));
     }
+
     @Override
-    public Role findByName(String name){
+    public Role findByName(String name) {
         Role rr = rolerepos.findByNameIgnoreCase(name);
-        if (rr != null){
+        if (rr != null) {
             return rr;
         } else {
             throw new ResourceNotFoundException(name);
         }
     }
+
     @Transactional
     @Override
-    public Role save(Role role){
-        if (role.getUsers().size() > 0){
+    public Role save(Role role) {
+        if (role.getUsers().size() > 0) {
             throw new ResourceFoundException("User Roles are not updated through Role.");
         }
         return rolerepos.save(role);
     }
+
     @Transactional
     @Override
-    public void deleteAll() { rolerepos.deleteAll(); }
+    public void deleteAll() {
+        rolerepos.deleteAll();
+    }
 
     @Override
     public Role update(long id, Role role) {
@@ -59,4 +68,5 @@ public class RoleServiceImpl implements RoleService{
         rolerepos.updateRoleName(userAuditing.getCurrentAuditor()
                 .get(), id, role.getName());
         return findRoleById(id);
+    }
 }
