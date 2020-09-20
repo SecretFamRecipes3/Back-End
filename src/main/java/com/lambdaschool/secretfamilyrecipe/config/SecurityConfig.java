@@ -42,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         return new InMemoryTokenStore();
     }
 
+    @Bean
     public PasswordEncoder encoder() {
 
         return new BCryptPasswordEncoder();
