@@ -1,6 +1,8 @@
 package com.lambdaschool.secretfamilyrecipe.services;
 
 import com.lambdaschool.secretfamilyrecipe.exceptions.ResourceNotFoundException;
+import com.lambdaschool.secretfamilyrecipe.models.User;
+import com.lambdaschool.secretfamilyrecipe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
