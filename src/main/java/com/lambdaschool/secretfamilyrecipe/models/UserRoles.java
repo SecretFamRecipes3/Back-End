@@ -49,8 +49,7 @@ public class UserRoles extends Auditable implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         if (this == o)
         {
             return true;
