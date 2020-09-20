@@ -7,11 +7,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Entity
+@Table(name = "userid")
 public class User extends Auditable {
 
     @Id
@@ -35,11 +38,10 @@ public class User extends Auditable {
     public User() {
     }
 
-    public User(String username, String email, String password, Set<UserRoles> roles) {
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.roles = roles;
     }
 
     public long getUserid() {
