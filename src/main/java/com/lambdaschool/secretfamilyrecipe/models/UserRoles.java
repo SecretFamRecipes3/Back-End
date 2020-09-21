@@ -11,13 +11,13 @@ import java.io.Serializable;
 public class UserRoles extends Auditable implements Serializable {
     @Id
     @ManyToOne
-    @JoinColumn(name = "userid")
+    @JoinColumn(name = "usersid")
     @JsonIgnoreProperties(value = "roles", allowSetters = true)
     private User user;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "roleid")
+    @JoinColumn(name = "rolesid")
     @JsonIgnoreProperties(value = "users", allowSetters = true)
     private Role role;
 

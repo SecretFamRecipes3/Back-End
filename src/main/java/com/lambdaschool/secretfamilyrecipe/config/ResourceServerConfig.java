@@ -43,13 +43,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .permitAll()
                 .antMatchers(HttpMethod.POST,
                         "/users/**")
-                .hasAnyRole("ADMIN")
+                .hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.DELETE,
                         "/users/**")
-                .hasAnyRole("ADMIN", "USER")
+                .hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,
                         "/users/**")
-                .hasAnyRole("ADMIN")
+                .hasAnyRole("ADMIN", "USER")
                 .antMatchers("/users/**",
                         "/useremails/**",
                         "/oauth/revoke-token",

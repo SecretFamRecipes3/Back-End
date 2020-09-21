@@ -34,8 +34,6 @@ public class OpenController {
     @Autowired
     UserService userService;
 
-    RestTemplate restTemplate = new RestTemplate();
-
     @PostMapping(value = "/createnewuser", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> addSelf(HttpServletRequest httpServletRequest,
                                      @Valid
