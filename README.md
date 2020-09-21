@@ -24,13 +24,13 @@
 #
 #### Axios call for register / create new user
 ````
-axios.post('https:/hsmm-secretfamilyrecipe.herokuapp.com/createnewuser', state.credentials)
+axios.post('http://hsmm-secretfamilyrecipe.herokuapp.com/createnewuser', state.credentials)
 ````
 #
 #### The login axios request should look like
 
 ```
-axios.post('https:/hsmm-secretfamilyrecipe.herokuapp.com/login', `grant_type=password&username=${credentials.username}&password=${credentials.password}`, {
+axios.post('http://hsmm-secretfamilyrecipe.herokuapp.com/login', `grant_type=password&username=${credentials.username}&password=${credentials.password}`, {
       headers: {
         // btoa is converting our client id/client secret into base64
         Authorization: `Basic ${btoa('XXXXXXX:XXXXXXXX')}`,
