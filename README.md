@@ -6,9 +6,9 @@
 ### Table of Contents  
 [Register and Login](#register-and-login)  
 [User](#user)  
-[Recipe](#Recipe)  
-[Ingredients](#Ingredients)
-[Category](#Category)
+[Recipe](#recipe)  
+[Ingredients](#ingredients)
+[Category](#category)
 
 ## REGISTER and LOGIN
 

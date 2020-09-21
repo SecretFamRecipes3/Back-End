@@ -35,13 +35,17 @@ public class User extends Auditable {
     @JsonIgnoreProperties(value = "user", allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "recipes", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "recipes", allowSetters = true)
+    private List<Recipe> recipes = new ArrayList<>();
+
     public User() {
     }
 
     public User(String username, String email, String password) {
-        this.username = username;
+        setUsername(username);
         this.email = email;
-        this.password = password;
+        setPassword(password);
     }
 
     public long getUserid() {
@@ -87,6 +91,14 @@ public class User extends Auditable {
 
     public void setRoles(Set<UserRoles> roles) {
         this.roles = roles;
+    }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
     @JsonIgnore

@@ -49,16 +49,6 @@ public class UserController {
                 HttpStatus.OK);
     }
 
-    @GetMapping(value = "/user/name/like/{userName}",
-            produces = "application/json")
-    public ResponseEntity<?> getUserLikeName(
-            @PathVariable
-                    String userName) {
-        List<User> u = userService.findByNameContaining(userName);
-        return new ResponseEntity<>(u,
-                HttpStatus.OK);
-    }
-
     @PostMapping(value = "/user",
             consumes = "application/json")
     public ResponseEntity<?> addNewUser(
