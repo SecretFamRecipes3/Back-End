@@ -1,6 +1,7 @@
 package com.lambdaschool.secretfamilyrecipe.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -40,6 +41,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/webjars/**",
                         "/createnewuser")
                 .permitAll()
+                .antMatchers(HttpMethod.POST,
+                        "/users/**")
+                .hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,
+                        "/users/**")
+                .hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.PUT,
+                        "/users/**")
+                .hasAnyRole("ADMIN")
                 .antMatchers("/users/**",
                         "/useremails/**",
                         "/oauth/revoke-token",
@@ -47,8 +57,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .authenticated()
                 .antMatchers("/roles/**")
                 .hasAnyRole("ADMIN")
-                .antMatchers("/users/**")
-                .hasAnyRole("ADMIN", "USER")
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new OAuth2AccessDeniedHandler());
