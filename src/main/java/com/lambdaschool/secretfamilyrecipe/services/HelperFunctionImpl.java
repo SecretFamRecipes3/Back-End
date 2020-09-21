@@ -1,5 +1,7 @@
 package com.lambdaschool.secretfamilyrecipe.services;
 
+import com.lambdaschool.secretfamilyrecipe.exceptions.ResourceNotFoundException;
+import com.lambdaschool.secretfamilyrecipe.models.ValidationError;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,13 +30,17 @@ public class HelperFunctionImpl implements HelperFunctions{
         }
         return listVE;
     }
+
     @Override
-    public boolean isAuthorizedToMakeChange(String username){
+    public boolean inAuthorizedToMakeChanges(String username) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(username.equalsIgnoreCase(authentication.getName().toLowerCase() || authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN")))){
+        if(username.equalsIgnoreCase(authentication.getName()
+                .toLowerCase()) || authentication.getAuthorities()
+                .contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             return true;
         } else {
             throw new ResourceNotFoundException(authentication.getName() + " not authorized to make change");
         }
     }
+
 }
