@@ -1,6 +1,7 @@
 package com.lambdaschool.secretfamilyrecipe.services;
 
 import com.lambdaschool.secretfamilyrecipe.exceptions.ResourceNotFoundException;
+import com.lambdaschool.secretfamilyrecipe.models.Recipe;
 import com.lambdaschool.secretfamilyrecipe.models.Role;
 import com.lambdaschool.secretfamilyrecipe.models.User;
 import com.lambdaschool.secretfamilyrecipe.models.UserRoles;
@@ -42,11 +43,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findByNameContaining(String username) {
-        return null;
-    }
-
-    @Override
     public User findByName(String name) {
         User uu = userrepos.findByUsername(name.toLowerCase());
         if (uu == null) {
@@ -63,6 +59,7 @@ public class UserServiceImpl implements UserService {
         userrepos.deleteById(id);
     }
 
+    @Transactional
     @Override
     public User save(User user) {
         User newUser = new User();
@@ -78,6 +75,12 @@ public class UserServiceImpl implements UserService {
                 .toLowerCase());
         newUser.setPasswordNoEncrypt(user.getPassword());
 
+        newUser.getRecipes()
+                .clear();
+        for (Recipe r : user.getRecipes()) {
+            newUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getInstruction(), newUser));
+        }
+
         newUser.getRoles()
                 .clear();
         for (UserRoles ur : user.getRoles()) {
@@ -86,8 +89,6 @@ public class UserServiceImpl implements UserService {
             newUser.getRoles()
                     .add(new UserRoles(newUser, addRole));
         }
-
-        // recipe code need to be add later
 
         return userrepos.save(newUser);
     }
@@ -114,7 +115,13 @@ public class UserServiceImpl implements UserService {
                     currentUser.getRoles().add(new UserRoles(currentUser, addRole));
                 }
             }
-            //add recipe code later
+
+            if (user.getRecipes().size() > 0) {
+                currentUser.getRecipes().clear();
+                for (Recipe r : user.getRecipes()) {
+                    currentUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getInstruction(), currentUser));
+                }
+            }
 
             return userrepos.save(currentUser);
         } else {
