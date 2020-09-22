@@ -34,10 +34,12 @@ public class SeedData implements CommandLineRunner {
         r2 = roleService.save(r2);
 
         Ingredient i1 = new Ingredient("Butter");
-
         Ingredient i2 = new Ingredient("All purpose flour");
         Ingredient i3 = new Ingredient("Egg");
         Ingredient i4 = new Ingredient("Mozzarella cheese");
+        Ingredient i5 = new Ingredient("Oil");
+
+
 
         User u1 = new User("admin", "admin@email.com", "password");
         u1.getRoles()

@@ -2,33 +2,32 @@ package com.lambdaschool.secretfamilyrecipe.models;
 
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Embeddable
 public class RecipeIngredientsId implements Serializable {
 
-    private long recipe;
+    private long recipes;
 
-    private long ingredient;
+    private long ingredients;
 
 
     public RecipeIngredientsId() {
     }
 
-    public long getRecipe() {
-        return recipe;
+    public long getRecipes() {
+        return recipes;
     }
 
-    public void setRecipe(long recipe) {
-        this.recipe = recipe;
+    public void setRecipes(long recipe) {
+        this.recipes = recipe;
     }
 
-    public long getIngredient() {
-        return ingredient;
+    public long getIngredients() {
+        return ingredients;
     }
 
-    public void setIngredient(long ingredient) {
-        this.ingredient = ingredient;
+    public void setIngredients(long ingredient) {
+        this.ingredients = ingredient;
     }
 
 
@@ -37,8 +36,8 @@ public class RecipeIngredientsId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RecipeIngredientsId that = (RecipeIngredientsId) o;
-        return recipe == that.recipe &&
-                ingredient == that.ingredient;
+        return recipes == that.recipes &&
+                ingredients == that.ingredients;
     }
 
     @Override

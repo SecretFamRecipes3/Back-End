@@ -82,7 +82,7 @@ public class RecipeServiceImpl implements RecipeService {
                             .getIngredientid());
 
                     currentRecipe.getIngredients()
-                            .add(new RecipeIngredients(currentRecipe, addIngredient));
+                            .add(new RecipeIngredients(currentRecipe, addIngredient, ri.getAmount()));
                 }
             }
             if (recipe.getInstruction() != null) {
@@ -116,7 +116,7 @@ public class RecipeServiceImpl implements RecipeService {
                 .clear();
         for (RecipeIngredients ri : recipe.getIngredients()) {
             Ingredient addIngredient = ingredientService.findIngredientById(ri.getIngredient().getIngredientid());
-            newRecipe.getIngredients().add(new RecipeIngredients(newRecipe, addIngredient));
+            newRecipe.getIngredients().add(new RecipeIngredients(newRecipe, addIngredient, ri.getAmount()));
 
         }
         return recipeRepository.save(newRecipe);

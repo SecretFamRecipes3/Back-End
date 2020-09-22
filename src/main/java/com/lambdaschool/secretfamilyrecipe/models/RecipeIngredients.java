@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "recipeingredients")
@@ -15,47 +14,56 @@ public class RecipeIngredients extends Auditable implements Serializable {
     @ManyToOne
     @JoinColumn(name = "recipeid")
     @JsonIgnoreProperties(value = "recipes", allowSetters = true)
-    private Recipe recipe;
+    private Recipe recipes;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "ingredientid")
     @JsonIgnoreProperties(value = "ingredients", allowSetters = true)
-    private Ingredient ingredient;
+    private Ingredient ingredients;
 
+    private String amount;
 
     public RecipeIngredients() {
     }
 
-    public RecipeIngredients(Recipe recipe, Ingredient ingredient) {
-        this.recipe = recipe;
-        this.ingredient = ingredient;
+    public RecipeIngredients(Recipe recipes, Ingredient ingredients, String amount) {
+        this.recipes = recipes;
+        this.ingredients = ingredients;
+        this.amount = amount;
     }
 
-    public Recipe getRecipe() {
-        return recipe;
+    public Recipe getRecipes() {
+        return recipes;
     }
 
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
+    public void setRecipes(Recipe recipe) {
+        this.recipes = recipe;
     }
 
     public Ingredient getIngredient() {
-        return ingredient;
+        return ingredients;
     }
 
     public void setIngredient(Ingredient ingredient) {
-        this.ingredient = ingredient;
+        this.ingredients = ingredient;
     }
 
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RecipeIngredients)) return false;
         RecipeIngredients that = (RecipeIngredients) o;
-        return ((recipe == null) ? 0 : recipe.getRecipeid()) == ((that.recipe == null) ? 0 : that.recipe.getRecipeid()) &&
-                ((ingredient == null) ? 0 : ingredient.getIngredientid()) == ((that.ingredient == null) ? 0 : that.ingredient.getIngredientid());
+        return ((recipes == null) ? 0 : recipes.getRecipeid()) == ((that.recipes == null) ? 0 : that.recipes.getRecipeid()) &&
+                ((ingredients == null) ? 0 : ingredients.getIngredientid()) == ((that.ingredients == null) ? 0 : that.ingredients.getIngredientid());
     }
 
     @Override
