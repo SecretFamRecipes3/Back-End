@@ -79,6 +79,8 @@ public class OpenController {
                 "read write trust");
         map.add("username",
                 newminuser.getUsername());
+        map.add("email",
+                newminuser.getEmail());
         map.add("password",
                 newminuser.getPassword());
 
