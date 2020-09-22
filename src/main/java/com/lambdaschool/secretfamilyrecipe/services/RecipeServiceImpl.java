@@ -51,12 +51,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void delete(long id) {
         if (recipeRepository.findById(id).isPresent()) {
-            if (helperFunctions.inAuthorizedToMakeChanges(recipeRepository.findById(id)
-                    .get()
-                    .getUser()
-                    .getUsername())) {
-                recipeRepository.deleteById(id);
-            }
+            recipeRepository.deleteById(id);
         } else {
             throw new ResourceNotFoundException("Recipe with id " + " Not Found");
         }
@@ -68,11 +63,6 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe update(Recipe recipe, long recipeid) {
 
         Recipe currentRecipe = findRecipeById(recipeid);
-
-        if (helperFunctions.inAuthorizedToMakeChanges(recipeRepository.findById(recipeid)
-                .get()
-                .getUser()
-                .getUsername())) {
             if (recipe.getTitle() != null) {
                 currentRecipe.setTitle((recipe.getTitle().toLowerCase()));
             }
@@ -82,11 +72,11 @@ public class RecipeServiceImpl implements RecipeService {
             if (recipe.getIngredients().size() > 0) {
                 currentRecipe.getIngredients().clear();
                 for (RecipeIngredients ri : recipe.getIngredients()) {
-                    Ingredient addIngredient = ingredientService.findIngredientById(ri.getIngredient()
-                            .getIngredientid());
+                    Ingredient addIngredient = ingredientRepository.findById(ri.getIngredient().getIngredientid())
+                            .orElseThrow(() -> new ResourceNotFoundException("Ingredient id " + ri.getIngredient().getIngredientid() + " not found!"));
 
                     currentRecipe.getIngredients()
-                            .add(new RecipeIngredients(currentRecipe, addIngredient, ri.getAmount()));
+                            .add(new RecipeIngredients(currentRecipe, addIngredient));
                 }
             }
             if (recipe.getInstruction() != null) {
@@ -96,9 +86,6 @@ public class RecipeServiceImpl implements RecipeService {
                 currentRecipe.setUser(recipe.getUser());
             }
             return recipeRepository.save(currentRecipe);
-        } else {
-            throw new ResourceNotFoundException("Recipe with id " + recipeid + "Not Found!");
-        }
 
     }
 
@@ -121,12 +108,10 @@ public class RecipeServiceImpl implements RecipeService {
             Ingredient addIngredient = ingredientRepository.findById(ri.getIngredient().getIngredientid())
                     .orElseThrow(() -> new ResourceNotFoundException("Ingredient id " + ri.getIngredient().getIngredientid()));
 
-            newRecipe.getIngredients().add(new RecipeIngredients(newRecipe, addIngredient, ri.getAmount()));
+            newRecipe.getIngredients().add(new RecipeIngredients(newRecipe, addIngredient));
 
         }
         newRecipe.setUser(recipe.getUser());
-
-
         return recipeRepository.save(newRecipe);
     }
 

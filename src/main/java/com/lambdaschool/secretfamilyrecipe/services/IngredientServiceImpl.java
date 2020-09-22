@@ -38,25 +38,32 @@ public class IngredientServiceImpl implements IngredientService{
         }
     }
 
+    @Transactional
     @Override
     public Ingredient update(Ingredient ingredient, long id) {
         Ingredient updatedIngr = findIngredientById(id);
+        if (ingredient.getRecipes().size() > 0) {
+            throw new ResourceNotFoundException("Recipes are not updated through ingredients");
+        }
         if (ingredient.getName() != null) {
             updatedIngr.setName(ingredient.getName());
+        }
+        if (ingredient.getAmount() != null) {
+            updatedIngr.setAmount(ingredient.getAmount());
         }
         return ingredientRepo.save(updatedIngr);
     }
 
+    @Transactional
     @Override
     public Ingredient save(Ingredient ingredient) {
-        Ingredient newIngr = new Ingredient();
-
-        if (ingredient.getIngredientid() != 0) {
-            ingredientRepo.findById(ingredient.getIngredientid())
-                    .orElseThrow(() -> new ResourceNotFoundException("Ingredient id " + ingredient.getIngredientid() + " not found!"));
-
+        if (ingredient.getRecipes().size() > 0) {
+            throw new ResourceNotFoundException("Recipes are not added through Ingredients");
         }
+        Ingredient newIngr = new Ingredient();
         newIngr.setName(ingredient.getName());
+        newIngr.setAmount(ingredient.getAmount());
+
         return ingredientRepo.save(newIngr);
     }
 

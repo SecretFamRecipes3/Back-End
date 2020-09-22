@@ -8,6 +8,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ingredients")
+@JsonIgnoreProperties(value = "recipes")
 public class Ingredient extends Auditable{
 
     @Id
@@ -16,6 +17,8 @@ public class Ingredient extends Auditable{
 
     private String name;
 
+    private String amount;
+
     @OneToMany(mappedBy = "ingredients", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "ingredients", allowSetters = true)
     private Set<RecipeIngredients> recipes = new HashSet<>();
@@ -23,8 +26,9 @@ public class Ingredient extends Auditable{
     public Ingredient() {
     }
 
-    public Ingredient(String name) {
+    public Ingredient(String name, String amount) {
         this.name = name;
+        this.amount = amount;
     }
 
     public long getIngredientid() {
@@ -41,6 +45,14 @@ public class Ingredient extends Auditable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
     public Set<RecipeIngredients> getRecipes() {

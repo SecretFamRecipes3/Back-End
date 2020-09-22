@@ -23,6 +23,7 @@ public class Recipe extends Auditable {
     @JsonIgnoreProperties(value = "recipes", allowSetters = true)
     private Set<RecipeIngredients> ingredients = new HashSet<>();
 
+
     @Column(length = 10000)
     private String instruction;
 
@@ -41,6 +42,14 @@ public class Recipe extends Auditable {
         this.user = user;
     }
 
+    public long getRecipeid() {
+        return recipeid;
+    }
+
+    public void setRecipeid(long recipeid) {
+        this.recipeid = recipeid;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -51,14 +60,6 @@ public class Recipe extends Auditable {
 
     public String getSource() {
         return source;
-    }
-
-    public long getRecipeid() {
-        return recipeid;
-    }
-
-    public void setRecipeid(long recipeid) {
-        this.recipeid = recipeid;
     }
 
     public void setSource(String source) {

@@ -25,12 +25,14 @@ public class RecipeController {
     @Autowired
     IngredientService ingredientService;
 
+    //http://localhost:2019/recipes/recipes
     @GetMapping(value = "/recipes", produces = "application/json")
     public ResponseEntity<?> listAllRecipes() {
         List<Recipe> allRecipes = recipeService.findAll();
         return new ResponseEntity<>(allRecipes, HttpStatus.OK);
     }
 
+    //http://localhost:2019/recipes/recipe/{id}
     @GetMapping(value = "/recipe/{id}", produces = "application/json")
     public ResponseEntity<?> getRecipeById(
             @PathVariable Long id) {
@@ -38,12 +40,14 @@ public class RecipeController {
         return new ResponseEntity<>(r, HttpStatus.OK);
     }
 
+    //http://localhost:2019/recipes/recipe/{id}
     @DeleteMapping(value = "/recipe/{id}")
     public ResponseEntity<?> deleteRecipeByID(@PathVariable long id) {
         recipeService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //http://localhost:2019/recipes/recipe/{id}
     @PutMapping(value = "/recipe/{id}/", consumes = "application/json")
     public ResponseEntity<?> updateRecipe(@Valid @RequestBody Recipe updateRecipe, @PathVariable long id) {
         updateRecipe.setRecipeid(id);
@@ -51,6 +55,7 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //http://localhost:2019/recipes/recipe
     @PostMapping(value = "/recipe", consumes = "application/json")
     public ResponseEntity<?> addNewRecipe(@Valid @RequestBody Recipe newRecipe) throws
             URISyntaxException {
@@ -67,24 +72,28 @@ public class RecipeController {
 
     //endpoints for ingredients
 
+    //http://localhost:2019/recipes/ingredients
     @GetMapping(value = "/ingredients", produces = "application/json")
     public ResponseEntity<?> listAllIngredients() {
         List<Ingredient> allIngredients = ingredientService.findAll();
         return new ResponseEntity<>(allIngredients, HttpStatus.OK);
     }
 
+    //http://localhost:2019/recipes/ingredient/{id}
     @GetMapping(value = "/ingredient/{id}", produces = "application/json")
     public ResponseEntity<?> getIngredientById(@PathVariable Long id) {
         Ingredient i = ingredientService.findIngredientById(id);
         return new ResponseEntity<>(i, HttpStatus.OK);
     }
 
+    //http://localhost:2019/recipes/ingredient/{id}
     @DeleteMapping(value = "/ingredient/{id}")
     public ResponseEntity<?> deleteIngredientById(@PathVariable long id) {
         ingredientService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //http://localhost:2019/recipes/ingredient
     @PutMapping(value = "/ingredient/{id}", consumes = "application/json")
     public ResponseEntity<?> updateIng(@Valid @RequestBody Ingredient ing, @PathVariable long id) {
         ing.setIngredientid(id);
@@ -92,6 +101,7 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //http://localhost:2019/recipes/ingredient
     @PostMapping(value = "/ingredient", consumes = "application/json")
     public ResponseEntity<?> addNewIngr(@Valid @RequestBody Ingredient ingr) {
         ingredientService.save(ingr);

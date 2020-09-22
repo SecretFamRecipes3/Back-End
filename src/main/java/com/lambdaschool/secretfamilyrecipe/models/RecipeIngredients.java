@@ -22,15 +22,13 @@ public class RecipeIngredients extends Auditable implements Serializable {
     @JsonIgnoreProperties("recipes")
     private Ingredient ingredients;
 
-    private String amount;
 
     public RecipeIngredients() {
     }
 
-    public RecipeIngredients(Recipe recipes, Ingredient ingredients, String amount) {
+    public RecipeIngredients(Recipe recipes, Ingredient ingredients) {
         this.recipes = recipes;
         this.ingredients = ingredients;
-        this.amount = amount;
     }
 
     public Recipe getRecipes() {
@@ -49,13 +47,6 @@ public class RecipeIngredients extends Auditable implements Serializable {
         this.ingredients = ingredient;
     }
 
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
 
     @Override
     public boolean equals(Object o) {
