@@ -59,25 +59,27 @@ public class SeedData implements CommandLineRunner {
         User u1 = new User("admin", "admin@email.com", "password");
         u1.getRoles()
                 .add(new UserRoles(u1, r1));
-        userService.save(u1);
+        u1 = userService.save(u1);
 
         Recipe re1 = new Recipe("Fried Mozzarella Puffs",
                 "Mom",
-                "Combine water, butter, and salt in a saucepan over medium-high heat. Bring to a simmer; pour in flour all at once and reduce heat to medium. Stir with a wooden spoon or spatula until a dough starts coming together. Cook, scraping up and stirring the dough, for 2 to 3 minutes.",
+                "Combine water, butter, and salt in a saucepan over medium-high heat. Bring to a simmer; pour in " +
+                        "flour all at once and reduce heat to medium. Stir with a wooden spoon or spatula until a dough starts " +
+                        "coming together. Cook, scraping up and stirring the dough, for 2 to 3 minutes.",
                 u1);
-//        re1.getIngredients().add(new RecipeIngredients(re1, i1, "2 Tablespoon"));
-//        re1.getIngredients().add(new RecipeIngredients(re1, i2, "1 cup"));
-//        re1.getIngredients().add(new RecipeIngredients(re1, i3, "1 large egg"));
-//        re1.getIngredients().add(new RecipeIngredients(re1, i4, "4 ounces"));
-//        re1.getIngredients().add(new RecipeIngredients(re1, i5, "4 cups"));
 
         Set<RecipeIngredients> recipeIngr1 = new HashSet<>();
         recipeIngr1.add(new RecipeIngredients(re1, i1, "2 Tablespoon"));
         recipeIngr1.add(new RecipeIngredients(re1, i2, "1 cup"));
-        recipeIngr1.add(new RecipeIngredients(re1, i3," 1 large egg"));
+        recipeIngr1.add(new RecipeIngredients(re1, i3,"1 large egg"));
+        recipeIngr1.add(new RecipeIngredients(re1, i4,"4 ounces"));
+        recipeIngr1.add(new RecipeIngredients(re1, i5,"4 cups"));
 
         re1.setIngredients(recipeIngr1);
         re1 = recipeService.save(re1);
+
+
+
 
         User u2 = new User("chef boyardee" ,"chef@email.com", "password");
         u2.getRoles()

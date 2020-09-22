@@ -13,13 +13,13 @@ public class RecipeIngredients extends Auditable implements Serializable {
     @Id
     @ManyToOne
     @JoinColumn(name = "recipeid")
-    @JsonIgnoreProperties(value = "recipes", allowSetters = true)
+    @JsonIgnoreProperties("ingredients")
     private Recipe recipes;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "ingredientid")
-    @JsonIgnoreProperties(value = "ingredients", allowSetters = true)
+    @JsonIgnoreProperties("recipes")
     private Ingredient ingredients;
 
     private String amount;

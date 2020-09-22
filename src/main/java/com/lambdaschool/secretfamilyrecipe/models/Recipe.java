@@ -28,7 +28,7 @@ public class Recipe extends Auditable {
 
     @ManyToOne
     @JoinColumn(name = "userid", nullable = false)
-    @JsonIgnoreProperties(value = "recipes", allowSetters = true)
+    @JsonIgnoreProperties("recipes")
     private User user;
 
     public Recipe() {
