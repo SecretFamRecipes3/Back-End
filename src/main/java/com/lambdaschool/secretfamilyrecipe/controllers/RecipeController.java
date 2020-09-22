@@ -5,11 +5,15 @@ import com.lambdaschool.secretfamilyrecipe.models.Recipe;
 import com.lambdaschool.secretfamilyrecipe.services.IngredientService;
 import com.lambdaschool.secretfamilyrecipe.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
@@ -47,10 +51,18 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(value = "/recipe", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> addNewRecipe(@Valid @RequestBody Recipe newRecipe) {
-        recipeService.save(newRecipe);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @PostMapping(value = "/recipe", consumes = "application/json")
+    public ResponseEntity<?> addNewRecipe(@Valid @RequestBody Recipe newRecipe) throws
+            URISyntaxException {
+        newRecipe.setRecipeid(0);
+        newRecipe = recipeService.save(newRecipe);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        URI newRecipeURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{recipeid}")
+                .buildAndExpand(newRecipe.getRecipeid())
+                .toUri();
+        responseHeaders.setLocation(newRecipeURI);
+        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
     //endpoints for ingredients
@@ -80,7 +92,7 @@ public class RecipeController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(value = "/ingredient", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/ingredient", consumes = "application/json")
     public ResponseEntity<?> addNewIngr(@Valid @RequestBody Ingredient ingr) {
         ingredientService.save(ingr);
         return new ResponseEntity<>(HttpStatus.CREATED);

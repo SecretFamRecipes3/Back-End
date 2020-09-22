@@ -4,6 +4,7 @@ import com.lambdaschool.secretfamilyrecipe.exceptions.ResourceNotFoundException;
 import com.lambdaschool.secretfamilyrecipe.models.Ingredient;
 import com.lambdaschool.secretfamilyrecipe.models.Recipe;
 import com.lambdaschool.secretfamilyrecipe.models.RecipeIngredients;
+import com.lambdaschool.secretfamilyrecipe.repository.IngredientRepository;
 import com.lambdaschool.secretfamilyrecipe.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Autowired
     IngredientService ingredientService;
+
+    @Autowired
+    IngredientRepository ingredientRepository;
 
     @Override
     public List<Recipe> findAll() {
@@ -110,15 +114,19 @@ public class RecipeServiceImpl implements RecipeService {
         newRecipe.setTitle(recipe.getTitle());
         newRecipe.setSource(recipe.getSource());
         newRecipe.setInstruction(recipe.getInstruction());
-        newRecipe.setUser(recipe.getUser());
 
         newRecipe.getIngredients()
                 .clear();
         for (RecipeIngredients ri : recipe.getIngredients()) {
-            Ingredient addIngredient = ingredientService.findIngredientById(ri.getIngredient().getIngredientid());
+            Ingredient addIngredient = ingredientRepository.findById(ri.getIngredient().getIngredientid())
+                    .orElseThrow(() -> new ResourceNotFoundException("Ingredient id " + ri.getIngredient().getIngredientid()));
+
             newRecipe.getIngredients().add(new RecipeIngredients(newRecipe, addIngredient, ri.getAmount()));
 
         }
+        newRecipe.setUser(recipe.getUser());
+
+
         return recipeRepository.save(newRecipe);
     }
 

@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
         newUser.getRecipes()
                 .clear();
         for (Recipe r : user.getRecipes()) {
-            newUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getIngredients(), r.getInstruction(), newUser));
+            newUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getInstruction(), newUser));
         }
 
         newUser.getRoles()
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
             if (user.getRecipes().size() > 0) {
                 currentUser.getRecipes().clear();
                 for (Recipe r : user.getRecipes()) {
-                    currentUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getIngredients(), r.getInstruction(), currentUser));
+                    currentUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getInstruction(), currentUser));
                 }
             }
 
