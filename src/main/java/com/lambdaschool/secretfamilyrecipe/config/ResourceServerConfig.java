@@ -23,16 +23,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http)
-            throws
-            Exception {
-        // our antMatchers control which roles of users have access to which endpoints
-        // we must order our antmatchers from most restrictive to least restrictive.
-        // So restrict at method level before restricting at endpoint level.
-        // permitAll = everyone and their brother
-        // authenticated = any authenticated, signed in, user
-        // hasAnyRole = must be authenticated and be assigned this role!
+            throws Exception {
+
         http.authorizeRequests()
                 .antMatchers("/",
+                        "/recipes/recipes/",
                         "/h2-console/**",
                         "/swagger-resources/**",
                         "/swagger-resource/**",
@@ -42,7 +37,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/createnewuser")
                 .permitAll()
                 .antMatchers("/users/**",
-                        "/recipes/**",
+                        "recipes/recipe/**",
+                        "recipes/ingredients",
+                        "recipes/ingredient/**",
                         "/oauth/revoke-token",
                         "/logout")
                 .authenticated()

@@ -8,6 +8,7 @@ import com.lambdaschool.secretfamilyrecipe.models.UserRoles;
 
 import com.lambdaschool.secretfamilyrecipe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -78,7 +79,7 @@ public class UserServiceImpl implements UserService {
         newUser.getRecipes()
                 .clear();
         for (Recipe r : user.getRecipes()) {
-            newUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getInstruction(), newUser));
+            newUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getPreptime(), r.getInstruction(), newUser));
         }
 
         newUser.getRoles()
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserService {
             if (user.getRecipes().size() > 0) {
                 currentUser.getRecipes().clear();
                 for (Recipe r : user.getRecipes()) {
-                    currentUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getInstruction(), currentUser));
+                    currentUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getPreptime(), r.getInstruction(), currentUser));
                 }
             }
 

@@ -1,9 +1,8 @@
 package com.lambdaschool.secretfamilyrecipe.services;
 
 import com.lambdaschool.secretfamilyrecipe.exceptions.ResourceNotFoundException;
-import com.lambdaschool.secretfamilyrecipe.models.Ingredient;
-import com.lambdaschool.secretfamilyrecipe.models.Recipe;
-import com.lambdaschool.secretfamilyrecipe.models.RecipeIngredients;
+import com.lambdaschool.secretfamilyrecipe.models.*;
+import com.lambdaschool.secretfamilyrecipe.repository.CategoryRepository;
 import com.lambdaschool.secretfamilyrecipe.repository.IngredientRepository;
 import com.lambdaschool.secretfamilyrecipe.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,9 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Autowired
     IngredientRepository ingredientRepository;
+
+    @Autowired
+    CategoryRepository catrepos;
 
     @Override
     public List<Recipe> findAll() {
@@ -69,6 +71,9 @@ public class RecipeServiceImpl implements RecipeService {
             if (recipe.getSource() != null) {
                 currentRecipe.setSource(recipe.getSource());
             }
+            if (recipe.getPreptime() != null){
+                currentRecipe.setPreptime(recipe.getPreptime());
+            }
             if (recipe.getIngredients().size() > 0) {
                 currentRecipe.getIngredients().clear();
                 for (RecipeIngredients ri : recipe.getIngredients()) {
@@ -100,6 +105,7 @@ public class RecipeServiceImpl implements RecipeService {
         }
         newRecipe.setTitle(recipe.getTitle());
         newRecipe.setSource(recipe.getSource());
+        newRecipe.setPreptime(recipe.getPreptime());
         newRecipe.setInstruction(recipe.getInstruction());
 
         newRecipe.getIngredients()
@@ -111,7 +117,17 @@ public class RecipeServiceImpl implements RecipeService {
             newRecipe.getIngredients().add(new RecipeIngredients(newRecipe, addIngredient));
 
         }
+
+        newRecipe.getCategories().clear();
+        for (RecipeCategory rcat : recipe.getCategories()) {
+            Category addCat = catrepos.findById(rcat.getCategory().getCategoryid())
+                    .orElseThrow(() -> new ResourceNotFoundException("Category id " + rcat.getCategory().getCategoryid() + " Not Found"));
+
+            newRecipe.getCategories().add(new RecipeCategory(newRecipe, addCat));
+
+        }
         newRecipe.setUser(recipe.getUser());
+
         return recipeRepository.save(newRecipe);
     }
 
