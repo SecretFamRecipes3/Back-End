@@ -1,11 +1,16 @@
 package com.lambdaschool.secretfamilyrecipe.services;
 
 import com.lambdaschool.secretfamilyrecipe.models.Category;
-import com.lambdaschool.secretfamilyrecipe.models.Ingredient;
+
+import java.util.List;
 
 
 public interface CategoryService {
+    List<Category> findAll();
+
     Category findCategoryById(long id);
+
+    void delete(long id);
 
     Category save(Category category);
 
