@@ -121,6 +121,31 @@ the corresponding user to the id provided in the endpoint.
                     ],
                     "instruction": "Combine water, butter, and salt in a saucepan over medium-high heat. Bring to a simmer; pour in flour all at once and reduce heat to medium. Stir with a wooden spoon or spatula until a dough starts coming together. Cook, scraping up and stirring the dough, for 2 to 3 minutes.Remove from heat; transfer dough to a mixing bowl. Let cool until no longer hot but still very warm, 5 to 10 minutes. Add egg and season with cayenne and freshly ground black pepper. Whisk vigorously until mixture combines into a very soft, sticky dough. Switch to a spatula and scrape dough into a ball.Seal dough and spatula with plastic wrap and refrigerate in the bowl until cool, about 1 hour.In the meantime, season marinara sauce with oregano, red pepper flakes, balsamic vinegar in a small pot over medium heat. Add anchovy fillet. Stir together and bring to a simmer. Let simmer for 10 minutes; turn off heat and let sit until ready to use.Grate mozzarella cheese over the dough and stir to combine.Heat oil to 350 degrees F (175 degrees C) in a deep fryer or heavy-duty pan over medium heat. Preheat oven to 200 degrees F (93 degrees C) or any temperature for keeping warm.Scoop out about 2 tablespoons of dough per puff and form into a football shape using two spoons. Fry puffs, 5 or 6 at a time, in the hot oil until browned, 2 to 3 minutes. Drain on paper towels. Keep puffs warm in low oven while frying the rest. Serve with hot marinara sauce."
                 }
+                     "user": {
+                            "userid": 58,
+                            "username": "admin",
+                            "email": "admin@email.com",
+                            "roles": [
+                                {
+                                    "role": {
+                                        "roleid": 1,
+                                        "name": "ADMIN"
+                                    }
+                                }
+                            ]
+                        },
+                        "categories": [
+                            {
+                                "category": {
+                                    "categoryid": 48,
+                                    "categoryname": "Italian"
+                                }
+                            },
+                            {
+                                "category": {
+                                    "categoryid": 50,
+                                    "categoryname": "Appetizer"
+                                }
             ]
         },
 }
@@ -198,7 +223,32 @@ the corresponding user to the id provided in the endpoint.
                     ],
                     "instruction": "Combine water, butter, and salt in a saucepan over medium-high heat. Bring to a simmer; pour in flour all at once and reduce heat to medium. Stir with a wooden spoon or spatula until a dough starts coming together. Cook, scraping up and stirring the dough, for 2 to 3 minutes.Remove from heat; transfer dough to a mixing bowl. Let cool until no longer hot but still very warm, 5 to 10 minutes. Add egg and season with cayenne and freshly ground black pepper. Whisk vigorously until mixture combines into a very soft, sticky dough. Switch to a spatula and scrape dough into a ball.Seal dough and spatula with plastic wrap and refrigerate in the bowl until cool, about 1 hour.In the meantime, season marinara sauce with oregano, red pepper flakes, balsamic vinegar in a small pot over medium heat. Add anchovy fillet. Stir together and bring to a simmer. Let simmer for 10 minutes; turn off heat and let sit until ready to use.Grate mozzarella cheese over the dough and stir to combine.Heat oil to 350 degrees F (175 degrees C) in a deep fryer or heavy-duty pan over medium heat. Preheat oven to 200 degrees F (93 degrees C) or any temperature for keeping warm.Scoop out about 2 tablespoons of dough per puff and form into a football shape using two spoons. Fry puffs, 5 or 6 at a time, in the hot oil until browned, 2 to 3 minutes. Drain on paper towels. Keep puffs warm in low oven while frying the rest. Serve with hot marinara sauce."
                 }
-            ]
+                    "user": {
+                            "userid": 58,
+                            "username": "admin",
+                            "email": "admin@email.com",
+                            "roles": [
+                                {
+                                    "role": {
+                                        "roleid": 1,
+                                        "name": "ADMIN"
+                                    }
+                                }
+                            ]
+                        },
+                        "categories": [
+                            {
+                                "category": {
+                                    "categoryid": 48,
+                                    "categoryname": "Italian"
+                                }
+                            },
+                            {
+                                "category": {
+                                    "categoryid": 50,
+                                    "categoryname": "Appetizer"
+                                }
+                        ]
 ```
 
 | Type  | Endpoint                | What it does                                               | required                                  |
@@ -212,8 +262,7 @@ the corresponding user to the id provided in the endpoint.
 | GET   |/recipes/ingredient/{id} | Returns ingredient by id                                   | Token                                     |
 | POST  |/recipes/ingredient      | Creates new ingredient with status of CREATED              | Token                                     |
 | PUT   |/recipes/ingredient/{id} | Updated ingredient by Id                                   | Token                                     |
-| DELETE|/recipes/ingredient/{id} | Deletes specific ingredient by id                          | Token                                     | 
-                                  
+| DELETE|/recipes/ingredient/{id} | Deletes specific ingredient by id                          | Token                                     |                                   
 | GET   |/recipes/categories      | Returns full list of categories                            | Token                                     |
 | GET   |/recipes/category/{id}   | Returns category by id                                     | Token                                     |
 | POST  |/recipes/category        | Creates new category with status of CREATED                | Token                                     |
