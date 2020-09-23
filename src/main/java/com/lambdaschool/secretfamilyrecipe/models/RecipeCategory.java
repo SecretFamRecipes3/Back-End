@@ -8,43 +8,43 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "recipecategories")
-@IdClass(RecipeCategory.class)
+@IdClass(RecipeCategoryId.class)
 public class RecipeCategory extends Auditable implements Serializable {
 
     @Id
     @ManyToOne
     @JoinColumn(name = "recipeid")
-    @JsonIgnoreProperties(value = "categories", allowSetters = true)
-    private Recipe recipe;
+    @JsonIgnoreProperties("categories")
+    private Recipe recipes;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "categoryid")
-    @JsonIgnoreProperties(value = "recipes", allowSetters = true)
-    private Category category;
+    @JsonIgnoreProperties("recipes")
+    private Category categories;
 
     public RecipeCategory() {
     }
 
-    public RecipeCategory(Recipe recipe, Category category) {
-        this.recipe = recipe;
-        this.category = category;
+    public RecipeCategory(Recipe recipes, Category categories) {
+        this.recipes = recipes;
+        this.categories = categories;
     }
 
     public Recipe getRecipe() {
-        return recipe;
+        return recipes;
     }
 
     public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
+        this.recipes = recipe;
     }
 
     public Category getCategory() {
-        return category;
+        return categories;
     }
 
     public void setCategory(Category category) {
-        this.category = category;
+        this.categories = category;
     }
 
     @Override
@@ -55,8 +55,8 @@ public class RecipeCategory extends Auditable implements Serializable {
             return false;
         }
         RecipeCategory that = (RecipeCategory) o;
-        return ((recipe == null) ? 0 : recipe.getRecipeid()) == ((that.recipe == null) ? 0 : that.recipe.getRecipeid()) &&
-                ((category == null) ? 0 : category.getCategoryid()) == ((that.category == null) ? 0 : that.category.getCategoryid());
+        return ((recipes == null) ? 0 : recipes.getRecipeid()) == ((that.recipes == null) ? 0 : that.recipes.getRecipeid()) &&
+                ((categories == null) ? 0 : categories.getCategoryid()) == ((that.categories == null) ? 0 : that.categories.getCategoryid());
     }
 
     @Override
