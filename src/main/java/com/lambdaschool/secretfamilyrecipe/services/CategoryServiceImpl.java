@@ -2,11 +2,13 @@ package com.lambdaschool.secretfamilyrecipe.services;
 
 import com.lambdaschool.secretfamilyrecipe.exceptions.ResourceNotFoundException;
 import com.lambdaschool.secretfamilyrecipe.models.Category;
-import com.lambdaschool.secretfamilyrecipe.models.Ingredient;
 import com.lambdaschool.secretfamilyrecipe.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Transactional
 @Service("categoryService")
@@ -15,9 +17,24 @@ public class CategoryServiceImpl implements CategoryService{
     CategoryRepository catrepos;
 
     @Override
+    public List<Category> findAll() {
+        List<Category> list = new ArrayList<>();
+        catrepos.findAll().iterator().forEachRemaining(list::add);
+        return list;
+    }
+
+    @Override
     public Category findCategoryById(long id) {
         return catrepos.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Category with id " + " Not Found!"));
+    }
+
+    @Transactional
+    @Override
+    public void delete(long id) {
+        if (catrepos.findById(id).isPresent()) {
+            catrepos.deleteById(id);
+        }
     }
 
     @Transactional

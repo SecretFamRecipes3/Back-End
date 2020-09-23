@@ -1,7 +1,9 @@
 package com.lambdaschool.secretfamilyrecipe.controllers;
 
+import com.lambdaschool.secretfamilyrecipe.models.Category;
 import com.lambdaschool.secretfamilyrecipe.models.Ingredient;
 import com.lambdaschool.secretfamilyrecipe.models.Recipe;
+import com.lambdaschool.secretfamilyrecipe.services.CategoryService;
 import com.lambdaschool.secretfamilyrecipe.services.IngredientService;
 import com.lambdaschool.secretfamilyrecipe.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class RecipeController {
 
     @Autowired
     IngredientService ingredientService;
+
+    @Autowired
+    CategoryService categoryService;
 
     //http://localhost:2019/recipes/recipes
     @GetMapping(value = "/recipes", produces = "application/json")
@@ -105,6 +110,42 @@ public class RecipeController {
     @PostMapping(value = "/ingredient", consumes = "application/json")
     public ResponseEntity<?> addNewIngr(@Valid @RequestBody Ingredient ingr) {
         ingredientService.save(ingr);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+
+    // categories endpoints
+    //http://localhost:2019/recipes/categories
+    @GetMapping(value = "/categories", produces = "application/json")
+    public ResponseEntity<?> listAllCategories() {
+        List<Category> allCategories = categoryService.findAll();
+        return new ResponseEntity<>(allCategories, HttpStatus.OK);
+    }
+    //http://localhost:2019/recipes/category/{id}
+    @GetMapping(value = "/category/{id}", produces = "application/json")
+    public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
+        Category cat = categoryService.findCategoryById(id);
+        return new ResponseEntity<>(cat, HttpStatus.OK);
+    }
+
+    //http://localhost:2019/recipes/category/{id}
+    @DeleteMapping(value = "/category/{id}")
+    public ResponseEntity<?> deleteCategoryById(@PathVariable long id) {
+        categoryService.delete(id);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    //http://localhost:2019/recipes/category/{id}
+    @PutMapping(value = "/category/{id}", consumes = "application/json")
+    public ResponseEntity<?> update(@Valid @RequestBody Category cat, @PathVariable long id) {
+        cat.setCategoryid(id);
+        categoryService.update(cat, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    //http://localhost:2019/recipes/category
+    @PostMapping(value = "/category", consumes = "application/json")
+    public ResponseEntity<?> addNewCat(@Valid @RequestBody Category cat) {
+        categoryService.save(cat);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

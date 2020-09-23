@@ -84,6 +84,15 @@ public class RecipeServiceImpl implements RecipeService {
                             .add(new RecipeIngredients(currentRecipe, addIngredient));
                 }
             }
+            if (recipe.getCategories().size() > 0) {
+                currentRecipe.getCategories().clear();
+                for (RecipeCategory rcat : recipe.getCategories()) {
+                    Category addCat = catrepos.findById(rcat.getCategory().getCategoryid())
+                            .orElseThrow(() -> new ResourceNotFoundException("Category id " + rcat.getCategory().getCategoryid() + " Not Found"));
+
+                    currentRecipe.getCategories().add(new RecipeCategory(currentRecipe, addCat));
+                }
+            }
             if (recipe.getInstruction() != null) {
                 currentRecipe.setInstruction(recipe.getInstruction());
             }
@@ -108,14 +117,12 @@ public class RecipeServiceImpl implements RecipeService {
         newRecipe.setPreptime(recipe.getPreptime());
         newRecipe.setInstruction(recipe.getInstruction());
 
-        newRecipe.getIngredients()
-                .clear();
+        newRecipe.getIngredients().clear();
         for (RecipeIngredients ri : recipe.getIngredients()) {
             Ingredient addIngredient = ingredientRepository.findById(ri.getIngredient().getIngredientid())
                     .orElseThrow(() -> new ResourceNotFoundException("Ingredient id " + ri.getIngredient().getIngredientid()));
 
             newRecipe.getIngredients().add(new RecipeIngredients(newRecipe, addIngredient));
-
         }
 
         newRecipe.getCategories().clear();
@@ -124,8 +131,8 @@ public class RecipeServiceImpl implements RecipeService {
                     .orElseThrow(() -> new ResourceNotFoundException("Category id " + rcat.getCategory().getCategoryid() + " Not Found"));
 
             newRecipe.getCategories().add(new RecipeCategory(newRecipe, addCat));
-
         }
+
         newRecipe.setUser(recipe.getUser());
 
         return recipeRepository.save(newRecipe);
