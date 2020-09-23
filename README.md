@@ -262,8 +262,7 @@ the corresponding user to the id provided in the endpoint.
 | GET   |/recipes/ingredient/{id} | Returns ingredient by id                                   | Token                                     |
 | POST  |/recipes/ingredient      | Creates new ingredient with status of CREATED              | Token                                     |
 | PUT   |/recipes/ingredient/{id} | Updated ingredient by Id                                   | Token                                     |
-| DELETE|/recipes/ingredient/{id} | Deletes specific ingredient by id                          | Token                                     | 
-                                  
+| DELETE|/recipes/ingredient/{id} | Deletes specific ingredient by id                          | Token                                     |                                   
 | GET   |/recipes/categories      | Returns full list of categories                            | Token                                     |
 | GET   |/recipes/category/{id}   | Returns category by id                                     | Token                                     |
 | POST  |/recipes/category        | Creates new category with status of CREATED                | Token                                     |
