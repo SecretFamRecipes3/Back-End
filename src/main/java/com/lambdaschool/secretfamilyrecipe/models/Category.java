@@ -10,15 +10,15 @@ import java.util.Set;
 
 @Entity
 @Table(name = "categories")
-@JsonIgnoreProperties(value = "recipe")
-public class Category {
+@JsonIgnoreProperties(value = "recipes")
+public class Category extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long categoryid;
 
     private String categoryname;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "categories", allowSetters = true)
     private Set<RecipeCategory> recipes = new HashSet<>();
 
