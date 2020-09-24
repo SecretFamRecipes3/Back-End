@@ -35,7 +35,8 @@ public class RecipeCategory extends Auditable implements Serializable {
         return recipes;
     }
 
-    public void setRecipe(Recipe recipes) {
+
+    public void setRecipes(Recipe recipes) {
         this.recipes = recipes;
     }
 
