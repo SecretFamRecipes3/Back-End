@@ -36,7 +36,7 @@ public class RecipeIngredients extends Auditable implements Serializable {
     }
 
     public void setRecipes(Recipe recipe) {
-        this.recipes = recipe;
+        this.recipes = recipes;
     }
 
     public Ingredient getIngredient() {
