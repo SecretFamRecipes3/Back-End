@@ -53,11 +53,11 @@ public class RecipeController {
     }
 
     //http://localhost:2019/recipes/recipe/{id}
-    @PutMapping(value = "/recipe/{id}/", consumes = "application/json")
-    public ResponseEntity<?> updateRecipe(@Valid @RequestBody Recipe updateRecipe, @PathVariable long id) {
-        updateRecipe.setRecipeid(id);
-        recipeService.save(updateRecipe);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PutMapping(value = "/recipe/{id}", consumes = "application/json")
+    public ResponseEntity<?> updateFullRecipe(@Valid @RequestBody Recipe recipe, @PathVariable long id) {
+        recipe.setRecipeid(id);
+        recipeService.save(recipe);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     //http://localhost:2019/recipes/recipe

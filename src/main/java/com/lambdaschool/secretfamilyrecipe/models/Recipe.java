@@ -37,7 +37,7 @@ public class Recipe extends Auditable {
     private User user;
 
     @OneToMany(mappedBy = "recipes", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnoreProperties(value = "recipes", allowSetters = true)
+    @JsonIgnoreProperties(value = "recipe", allowSetters = true)
     private Set<RecipeCategory> categories = new HashSet<>();
 
 //    @ManyToMany()

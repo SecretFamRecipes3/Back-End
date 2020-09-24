@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
     public User update(User user, long id) {
         User currentUser = findUserById(id);
 
-        if (helperFunctions.inAuthorizedToMakeChanges(currentUser.getUsername())) {
+        if (helperFunctions.isAuthorizedToMakeChanges(currentUser.getUsername())) {
             if (user.getUsername() != null) {
                 currentUser.setUsername(user.getUsername().toLowerCase());
             }

@@ -70,21 +70,20 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Transactional
     @Override
-    public Recipe update(Recipe recipe, long recipeid) {
-
+    public Recipe update(Recipe updateRecipe, long recipeid) {
         Recipe currentRecipe = findRecipeById(recipeid);
-            if (recipe.getTitle() != null) {
-                currentRecipe.setTitle((recipe.getTitle().toLowerCase()));
+            if (updateRecipe.getTitle() != null) {
+                currentRecipe.setTitle(updateRecipe.getTitle());
             }
-            if (recipe.getSource() != null) {
-                currentRecipe.setSource(recipe.getSource());
+            if (updateRecipe.getSource() != null) {
+                currentRecipe.setSource(updateRecipe.getSource());
             }
-            if (recipe.getPreptime() != null){
-                currentRecipe.setPreptime(recipe.getPreptime());
+            if (updateRecipe.getPreptime() != null){
+                currentRecipe.setPreptime(updateRecipe.getPreptime());
             }
-            if (recipe.getIngredients().size() > 0) {
+            if (updateRecipe.getIngredients().size() > 0) {
                 currentRecipe.getIngredients().clear();
-                for (RecipeIngredients ri : recipe.getIngredients()) {
+                for (RecipeIngredients ri : updateRecipe.getIngredients()) {
                     Ingredient addIngredient = ingredientRepository.findById(ri.getIngredient().getIngredientid())
                             .orElseThrow(() -> new ResourceNotFoundException("Ingredient id " + ri.getIngredient().getIngredientid() + " not found!"));
 
@@ -92,23 +91,22 @@ public class RecipeServiceImpl implements RecipeService {
                             .add(new RecipeIngredients(currentRecipe, addIngredient));
                 }
             }
-            if (recipe.getCategories().size() > 0) {
+            if (updateRecipe.getCategories().size() > 0) {
                 currentRecipe.getCategories().clear();
-                for (RecipeCategory rcat : recipe.getCategories()) {
+                for (RecipeCategory rcat : updateRecipe.getCategories()) {
                     Category addCat = catrepos.findById(rcat.getCategory().getCategoryid())
                             .orElseThrow(() -> new ResourceNotFoundException("Category id " + rcat.getCategory().getCategoryid() + " Not Found"));
 
                     currentRecipe.getCategories().add(new RecipeCategory(currentRecipe, addCat));
                 }
             }
-            if (recipe.getInstruction() != null) {
-                currentRecipe.setInstruction(recipe.getInstruction());
+            if (updateRecipe.getInstruction() != null) {
+                currentRecipe.setInstruction(updateRecipe.getInstruction());
             }
-            if (recipe.getUser() != null) {
-                currentRecipe.setUser(recipe.getUser());
+            if (updateRecipe.getUser() != null) {
+                currentRecipe.setUser(updateRecipe.getUser());
             }
             return recipeRepository.save(currentRecipe);
-
     }
 
     @Transactional
@@ -135,6 +133,7 @@ public class RecipeServiceImpl implements RecipeService {
             } else {
                 Ingredient newIng = new Ingredient();
                 newIng.setName(ri.getIngredient().getName());
+                newIng.setAmount(ri.getIngredient().getAmount());
                 addIng = ingredientService.save(newIng);
             }
 
@@ -161,7 +160,6 @@ public class RecipeServiceImpl implements RecipeService {
             newRecipe.setUser(userService.findByName(auth.getName()));
         }
 
-        System.out.println(newRecipe.getUser().getUserid());
         return recipeRepository.save(newRecipe);
     }
 

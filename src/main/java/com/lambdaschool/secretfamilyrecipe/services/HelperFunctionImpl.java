@@ -32,7 +32,7 @@ public class HelperFunctionImpl implements HelperFunctions{
     }
 
     @Override
-    public boolean inAuthorizedToMakeChanges(String username) {
+    public boolean isAuthorizedToMakeChanges(String username) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(username.equalsIgnoreCase(authentication.getName()
                 .toLowerCase()) || authentication.getAuthorities()
