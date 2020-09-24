@@ -6,10 +6,12 @@ import com.lambdaschool.secretfamilyrecipe.repository.CategoryRepository;
 import com.lambdaschool.secretfamilyrecipe.repository.IngredientRepository;
 import com.lambdaschool.secretfamilyrecipe.repository.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Transactional
@@ -18,6 +20,12 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Autowired
     UserAuditing userAuditing;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    CategoryService categoryService;
 
     @Autowired
     RecipeRepository recipeRepository;
@@ -108,6 +116,7 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe save(Recipe recipe) {
         Recipe newRecipe = new Recipe();
 
+//        User currentUser = userService.findUserById(userid);
         if (recipe.getRecipeid() != 0) {
             recipeRepository.findById(recipe.getRecipeid())
                     .orElseThrow(() -> new ResourceNotFoundException("Recipe id " + recipe.getRecipeid() + " not found!"));
@@ -117,24 +126,42 @@ public class RecipeServiceImpl implements RecipeService {
         newRecipe.setPreptime(recipe.getPreptime());
         newRecipe.setInstruction(recipe.getInstruction());
 
-        newRecipe.getIngredients().clear();
+        newRecipe.setIngredients(new HashSet<>());
         for (RecipeIngredients ri : recipe.getIngredients()) {
-            Ingredient addIngredient = ingredientRepository.findById(ri.getIngredient().getIngredientid())
-                    .orElseThrow(() -> new ResourceNotFoundException("Ingredient id " + ri.getIngredient().getIngredientid()));
+            Ingredient addIng;
+            if (ri.getIngredient().getIngredientid() > 0) {
+                addIng = ingredientRepository.findById(ri.getIngredient().getIngredientid())
+                        .orElseThrow(() -> new ResourceNotFoundException("Ingredient id " + ri.getIngredient().getIngredientid()));
+            } else {
+                Ingredient newIng = new Ingredient();
+                newIng.setName(ri.getIngredient().getName());
+                addIng = ingredientService.save(newIng);
+            }
 
-            newRecipe.getIngredients().add(new RecipeIngredients(newRecipe, addIngredient));
+            newRecipe.getIngredients().add(new RecipeIngredients(newRecipe, addIng));
         }
 
-        newRecipe.getCategories().clear();
+        newRecipe.setCategories(new HashSet<>());
         for (RecipeCategory rcat : recipe.getCategories()) {
-            Category addCat = catrepos.findById(rcat.getCategory().getCategoryid())
-                    .orElseThrow(() -> new ResourceNotFoundException("Category id " + rcat.getCategory().getCategoryid() + " Not Found"));
-
+            Category addCat;
+            if (rcat.getCategory().getCategoryid() > 0) {
+                addCat = catrepos.findById(rcat.getCategory().getCategoryid())
+                        .orElseThrow(() -> new ResourceNotFoundException("Category id " + rcat.getCategory().getCategoryid() + " Not Found"));
+            } else {
+                Category newCat = new Category();
+                newCat.setCategoryname(rcat.getCategory().getCategoryname());
+                addCat = categoryService.save(newCat);
+            }
             newRecipe.getCategories().add(new RecipeCategory(newRecipe, addCat));
         }
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            newRecipe.setUser(recipe.getUser());
+        } else {
+            newRecipe.setUser(userService.findByName(auth.getName()));
+        }
 
-        newRecipe.setUser(recipe.getUser());
-
+        System.out.println(newRecipe.getUser().getUserid());
         return recipeRepository.save(newRecipe);
     }
 

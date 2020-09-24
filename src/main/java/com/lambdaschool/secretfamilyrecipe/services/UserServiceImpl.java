@@ -76,11 +76,11 @@ public class UserServiceImpl implements UserService {
                 .toLowerCase());
         newUser.setPasswordNoEncrypt(user.getPassword());
 
-        newUser.getRecipes()
-                .clear();
-        for (Recipe r : user.getRecipes()) {
-            newUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getPreptime(), r.getInstruction(), newUser));
-        }
+//        newUser.getRecipes()
+//                .clear();
+//        for (Recipe r : user.getRecipes()) {
+//            newUser.getRecipes().add(new Recipe(r.getTitle(), r.getSource(), r.getPreptime(), r.getInstruction(), newUser));
+//        }
 
         newUser.getRoles()
                 .clear();

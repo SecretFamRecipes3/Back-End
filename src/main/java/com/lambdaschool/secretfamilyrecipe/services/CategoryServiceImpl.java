@@ -43,9 +43,10 @@ public class CategoryServiceImpl implements CategoryService{
         if (category.getRecipes().size() > 0) {
             throw new ResourceNotFoundException("Recipes are not added through Categories");
         }
-        Category newCat = new Category();
-        newCat.setCategoryname(category.getCategoryname());
-        return catrepos.save(newCat);
+//        Category newCat = new Category();
+//        newCat.setCategoryname(category.getCategoryname());
+//        return catrepos.save(newCat);
+        return catrepos.save(category);
     }
 
     @Transactional
