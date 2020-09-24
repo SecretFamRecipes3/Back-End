@@ -35,6 +35,7 @@ public class RecipeCategory extends Auditable implements Serializable {
         return recipes;
     }
 
+
     public void setRecipes(Recipe recipes) {
         this.recipes = recipes;
     }
@@ -43,8 +44,8 @@ public class RecipeCategory extends Auditable implements Serializable {
         return categories;
     }
 
-    public void setCategory(Category category) {
-        this.categories = category;
+    public void setCategory(Category categories) {
+        this.categories = categories;
     }
 
     @Override
