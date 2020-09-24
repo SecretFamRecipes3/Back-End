@@ -60,11 +60,12 @@ public class IngredientServiceImpl implements IngredientService{
         if (ingredient.getRecipes().size() > 0) {
             throw new ResourceNotFoundException("Recipes are not added through Ingredients");
         }
-        Ingredient newIngr = new Ingredient();
-        newIngr.setName(ingredient.getName());
-        newIngr.setAmount(ingredient.getAmount());
+//        Ingredient newIngr = new Ingredient();
+//        newIngr.setName(ingredient.getName());
+//        newIngr.setAmount(ingredient.getAmount());
 
-        return ingredientRepo.save(newIngr);
+//        return ingredientRepo.save(newIngr);
+        return ingredientRepo.save(ingredient);
     }
 
     @Transactional

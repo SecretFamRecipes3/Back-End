@@ -72,7 +72,7 @@ public class RecipeController {
                 .buildAndExpand(newRecipe.getRecipeid())
                 .toUri();
         responseHeaders.setLocation(newRecipeURI);
-        return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>("",responseHeaders, HttpStatus.CREATED);
     }
 
     //endpoints for ingredients
