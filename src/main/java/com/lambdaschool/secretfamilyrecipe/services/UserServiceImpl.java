@@ -8,7 +8,6 @@ import com.lambdaschool.secretfamilyrecipe.models.UserRoles;
 
 import com.lambdaschool.secretfamilyrecipe.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,7 +98,7 @@ public class UserServiceImpl implements UserService {
     public User update(User user, long id) {
         User currentUser = findUserById(id);
 
-        if (helperFunctions.inAuthorizedToMakeChanges(currentUser.getUsername())) {
+        if (helperFunctions.isAuthorizedToMakeChanges(currentUser.getUsername())) {
             if (user.getUsername() != null) {
                 currentUser.setUsername(user.getUsername().toLowerCase());
             }
