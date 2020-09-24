@@ -128,10 +128,17 @@ public class RecipeServiceImpl implements RecipeService {
 
         newRecipe.setIngredients(new HashSet<>());
         for (RecipeIngredients ri : recipe.getIngredients()) {
-            Ingredient addIngredient = ingredientRepository.findById(ri.getIngredient().getIngredientid())
-                    .orElseThrow(() -> new ResourceNotFoundException("Ingredient id " + ri.getIngredient().getIngredientid()));
-//            ri.setIngredient(ingredientService.findIngredientById(recipe.getRecipeid()));
-            newRecipe.getIngredients().add(new RecipeIngredients(newRecipe, addIngredient));
+            Ingredient addIng;
+            if (ri.getIngredient().getIngredientid() > 0) {
+                addIng = ingredientRepository.findById(ri.getIngredient().getIngredientid())
+                        .orElseThrow(() -> new ResourceNotFoundException("Ingredient id " + ri.getIngredient().getIngredientid()));
+            } else {
+                Ingredient newIng = new Ingredient();
+                newIng.setName(ri.getIngredient().getName());
+                addIng = ingredientService.save(newIng);
+            }
+
+            newRecipe.getIngredients().add(new RecipeIngredients(newRecipe, addIng));
         }
 
         newRecipe.setCategories(new HashSet<>());
@@ -145,8 +152,6 @@ public class RecipeServiceImpl implements RecipeService {
                 newCat.setCategoryname(rcat.getCategory().getCategoryname());
                 addCat = categoryService.save(newCat);
             }
-
-//            rcat.setCategory(categoryService.findCategoryById(recipe.getRecipeid()));
             newRecipe.getCategories().add(new RecipeCategory(newRecipe, addCat));
         }
         var auth = SecurityContextHolder.getContext().getAuthentication();
