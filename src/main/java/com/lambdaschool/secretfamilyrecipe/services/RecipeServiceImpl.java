@@ -71,8 +71,6 @@ public class RecipeServiceImpl implements RecipeService {
     @Transactional
     @Override
     public Recipe update(Recipe updateRecipe, long recipeid) {
-
-
         Recipe currentRecipe = findRecipeById(recipeid);
             if (updateRecipe.getTitle() != null) {
                 currentRecipe.setTitle((updateRecipe.getTitle()));

@@ -53,16 +53,16 @@ public class RecipeController {
     }
 
     //http://localhost:2019/recipes/recipe/{id}
-    @PatchMapping(value = "/recipe/{id}/", consumes = "application/json", produces = "application/jsonu")
-    public ResponseEntity<?> updateRecipe(@RequestBody Recipe updateRecipe, @PathVariable long id) {
-        recipeService.update(updateRecipe, id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//    @PatchMapping(value = "/recipe/{id}/", consumes = "application/json", produces = "application/jsonu")
+//    public ResponseEntity<?> updateRecipe(@RequestBody Recipe updateRecipe, @PathVariable long id) {
+//        recipeService.update(updateRecipe, id);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 
     @PutMapping(value = "/recipe/{id}", consumes = "application/json")
-    public ResponseEntity<?> updateFullRecipe(@Valid @RequestBody Recipe recipe, @PathVariable long id) {
-        recipe.setRecipeid(id);
-        recipeService.save(recipe);
+    public ResponseEntity<?> updateFullRecipe(@Valid @RequestBody Recipe updateRecipe, @PathVariable long id) {
+        updateRecipe.setRecipeid(id);
+        recipeService.update(updateRecipe, id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
@@ -108,7 +108,7 @@ public class RecipeController {
     @PutMapping(value = "/ingredient/{id}", consumes = "application/json")
     public ResponseEntity<?> updateIng(@Valid @RequestBody Ingredient ing, @PathVariable long id) {
         ing.setIngredientid(id);
-        ingredientService.save(ing);
+        ingredientService.update(ing, id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
