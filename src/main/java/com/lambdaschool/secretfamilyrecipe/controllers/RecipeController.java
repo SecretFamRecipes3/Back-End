@@ -62,8 +62,8 @@ public class RecipeController {
     @PutMapping(value = "/recipe/{id}", consumes = "application/json")
     public ResponseEntity<?> updateFullRecipe(@Valid @RequestBody Recipe recipe, @PathVariable long id) {
         recipe.setRecipeid(id);
-        recipeService.save(recipe);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        recipe = recipeService.save(recipe);
+        return new ResponseEntity<>(recipe, HttpStatus.ACCEPTED);
     }
 
     //http://localhost:2019/recipes/recipe

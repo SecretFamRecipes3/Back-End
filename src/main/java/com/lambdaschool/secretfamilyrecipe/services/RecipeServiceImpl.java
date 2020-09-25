@@ -119,8 +119,11 @@ public class RecipeServiceImpl implements RecipeService {
 //        User currentUser = userService.findUserById(userid);
         if (recipe.getRecipeid() != 0) {
             recipeRepository.findById(recipe.getRecipeid())
+
                     .orElseThrow(() -> new ResourceNotFoundException("Recipe id " + recipe.getRecipeid() + " not found!"));
+            newRecipe.setRecipeid(recipe.getRecipeid());
         }
+
         newRecipe.setTitle(recipe.getTitle());
         newRecipe.setSource(recipe.getSource());
         newRecipe.setPreptime(recipe.getPreptime());
@@ -162,8 +165,13 @@ public class RecipeServiceImpl implements RecipeService {
             newRecipe.setUser(userService.findByName(auth.getName()));
         }
 
-        System.out.println(newRecipe.getUser().getUserid());
+//        System.out.println(newRecipe.getUser().getUserid());
         return recipeRepository.save(newRecipe);
     }
 
+    @Transactional
+    @Override
+    public void deleteAll() {
+        recipeRepository.deleteAll();
+    }
 }
