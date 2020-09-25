@@ -71,7 +71,6 @@ public class RecipeServiceImpl implements RecipeService {
     @Transactional
     @Override
     public Recipe update(Recipe updateRecipe, long recipeid) {
-
         Recipe currentRecipe = findRecipeById(recipeid);
             if (updateRecipe.getTitle() != null) {
                 currentRecipe.setTitle((updateRecipe.getTitle()));
@@ -108,7 +107,6 @@ public class RecipeServiceImpl implements RecipeService {
                 currentRecipe.setUser(updateRecipe.getUser());
             }
             return recipeRepository.save(currentRecipe);
-
     }
 
     @Transactional
@@ -164,8 +162,6 @@ public class RecipeServiceImpl implements RecipeService {
         } else {
             newRecipe.setUser(userService.findByName(auth.getName()));
         }
-
-//        System.out.println(newRecipe.getUser().getUserid());
         return recipeRepository.save(newRecipe);
     }
 

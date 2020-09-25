@@ -26,7 +26,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/",
-                        "/recipes/recipes/",
+                        "/recipes/recipes/",//GET
+                        "/createnewuser",//POST
+                        "login",//POST
                         "/h2-console/**",
                         "/swagger-resources/**",
                         "/swagger-resource/**",
@@ -35,15 +37,20 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/webjars/**",
                         "/createnewuser")
                 .permitAll()
-                .antMatchers("/users/**",
-                        "recipes/recipe/**",
-                        "recipes/ingredients",
-                        "recipes/ingredient/**",
+                .antMatchers("/users/**",//GET POST PUT PATCH DELETE
                         "/oauth/revoke-token",
-                        "/logout")
-                .authenticated()
-                .antMatchers("/roles/**")
+                        "/roles/**")
                 .hasAnyRole("ADMIN")
+                .antMatchers("/logout",//GET
+                        "recipes/recipe",//POST
+                        "recipes/recipe/**",//GET PUT DELETE
+                        "recipes/ingredient",//POST
+                        "recipes/ingredients",//GET
+                        "recipes/ingredient/**",//GET PUT DELETE
+                        "recipes/categories",//GET
+                        "recipes/category",//POST
+                        "recipes/category/**")//GET PUT DELETE
+                .authenticated()
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new OAuth2AccessDeniedHandler());
