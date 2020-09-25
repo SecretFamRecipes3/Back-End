@@ -11,6 +11,8 @@ public interface RecipeService {
 
     void delete(long id);
 
+    public void deleteAll();
+
     Recipe update(Recipe updateRecipe, long recipeid);
 
     Recipe save(Recipe recipe);
